@@ -37,9 +37,12 @@ public class Game extends Canvas implements Runnable {
 		setPreferredSize(size);
 		display = new Display(width, height);		
 		hud = new HUD();
-		handler.addObject(new Player(getWindowWidth() / 2,getWindowHeight() / 2, ID.Player));		
+		handler.addObject(new Player(getWindowWidth() / 2,getWindowHeight() / 2, ID.Player, handler));		
 		random = new Random();
-		handler.addObject(new BasicEnemy(random.nextInt(getWindowWidth()),random.nextInt(getWindowHeight()), ID.BasicEnemy));	
+		handler.addObject(new BasicEnemy(random.nextInt(getWindowWidth()),random.nextInt(getWindowHeight()), ID.BasicEnemy, handler));
+		handler.addObject(new BasicEnemy(random.nextInt(getWindowWidth()),random.nextInt(getWindowHeight()), ID.BasicEnemy, handler));
+		handler.addObject(new BasicEnemy(random.nextInt(getWindowWidth()),random.nextInt(getWindowHeight()), ID.BasicEnemy, handler));
+		
 	}
 	
 //Start Game Loop

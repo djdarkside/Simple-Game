@@ -3,5 +3,6 @@ package com.djdarkside.simple;
 public enum ID {
 
 	Player(),
-	BasicEnemy();	
+	BasicEnemy(),
+	Trail();	
 }

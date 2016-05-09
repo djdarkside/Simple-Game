@@ -8,7 +8,6 @@ public class HUD {
 	public static int health = 100;
 	
 	public void update() {
-		//health--;
 		health = Game.clamp(health, 0, 100);
 	}
 	
@@ -19,7 +18,5 @@ public class HUD {
 		g.fillRect(15, 15, health * 4, 24);
 		g.setColor(Color.white);
 		g.drawRect(15, 15, 400, 24);
-	}
-	
-	
+	}	
 }
