@@ -15,9 +15,9 @@ import com.djdarkside.simple.input.KeyInput;
 public class Game extends Canvas implements Runnable {
 
 	private static final long serialVersionUID = -6398779311230661552L;	
-	private static int width = 640;
-	private static int height = width / 16 * 9;
 	private static int scale = 2;	
+	private static int width = 640 * scale;
+	private static int height = width / 16 * 9;
 	private static String title = "Simple Game";
 	private Thread thread;
 	private boolean running = false;
@@ -27,22 +27,20 @@ public class Game extends Canvas implements Runnable {
 	private int[] pixels = ((DataBufferInt)image.getRaster().getDataBuffer()).getData();
 	private Handler handler;
 	private Random random;
-	private HUD hud;
-	
+	private HUD hud;	
+	private Spawn spawn;
 	
 	public Game() {		
 		handler = new Handler();
+		random = new Random();
 		this.addKeyListener(new KeyInput(handler));
-		Dimension size = new Dimension(getWindowWidth(), getWindowHeight());
+		Dimension size = new Dimension(width, height);
 		setPreferredSize(size);
 		display = new Display(width, height);		
 		hud = new HUD();
-		handler.addObject(new Player(getWindowWidth() / 2,getWindowHeight() / 2, ID.Player, handler));		
-		random = new Random();
-		handler.addObject(new BasicEnemy(random.nextInt(getWindowWidth()),random.nextInt(getWindowHeight()), ID.BasicEnemy, handler));
-		handler.addObject(new BasicEnemy(random.nextInt(getWindowWidth()),random.nextInt(getWindowHeight()), ID.BasicEnemy, handler));
-		handler.addObject(new BasicEnemy(random.nextInt(getWindowWidth()),random.nextInt(getWindowHeight()), ID.BasicEnemy, handler));
-		
+		spawn = new Spawn(handler, hud);
+		handler.addObject(new Player(width / 2, height / 2, ID.Player, handler));	
+		handler.addObject(new BasicEnemy(random.nextInt(Game.getWindowWidth()- 50), random.nextInt(Game.getWindowHeight()- 50), ID.BasicEnemy, handler));
 	}
 	
 //Start Game Loop
@@ -93,6 +91,7 @@ public class Game extends Canvas implements Runnable {
 	public void update() {
 		handler.update();
 		hud.update();
+		spawn.update();
 	}
 	
 	public void render() {
@@ -106,10 +105,8 @@ public class Game extends Canvas implements Runnable {
 	//Graphics Below		
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, getWidth(), getHeight());
-		//Renders Player objects
-		handler.render(g);
-		//Renders the HUD
-		hud.render(g);
+		handler.render(g);   	//Renders Player objects
+		hud.render(g);		    //Renders the HUD
 	//End Graphics
 		g.dispose();
 		buffer.show();		
@@ -133,10 +130,12 @@ public class Game extends Canvas implements Runnable {
 		game.frame.setVisible(true);		
 		game.start();
 	}
+	
 	public static int getWindowWidth() {
-		return width * scale;
+		return width;
 	}
+	
 	public static int getWindowHeight() {
-		return height * scale;
+		return height;
 	}
 }
