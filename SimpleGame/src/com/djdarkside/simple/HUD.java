@@ -11,8 +11,8 @@ public class HUD {
 	private int level = 1;
 	
 	public void update() {
-		health = Game.clamp(health, 0, 100);
-		greenValue = Game.clamp(greenValue, 0, 255);
+		health = (int) Game.clamp(health, 0, 100);
+		greenValue = (int) Game.clamp(greenValue, 0, 255);
 		greenValue = health * 2;
 		score++;
 	}
