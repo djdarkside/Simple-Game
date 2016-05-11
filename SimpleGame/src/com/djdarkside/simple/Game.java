@@ -40,7 +40,8 @@ public class Game extends Canvas implements Runnable {
 		hud = new HUD();
 		spawn = new Spawn(handler, hud);
 		handler.addObject(new Player(width / 2, height / 2, ID.Player, handler));	
-		handler.addObject(new BasicEnemy(random.nextInt(Game.getWindowWidth()- 50), random.nextInt(Game.getWindowHeight()- 50), ID.BasicEnemy, handler));
+		
+			handler.addObject(new EnemyBoss((width / 2) - 48, -120, ID.EnemyBoss, handler));
 	}
 	
 //Start Game Loop
@@ -92,6 +93,7 @@ public class Game extends Canvas implements Runnable {
 		handler.update();
 		hud.update();
 		spawn.update();
+		
 	}
 	
 	public void render() {

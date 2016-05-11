@@ -39,7 +39,7 @@ public class Player extends GameObject {
 	public void collision() {
 		for (int i = 0; i < handler.object.size(); i++) {
 			GameObject tempObject = handler.object.get(i);
-			if (tempObject.getID() == ID.BasicEnemy || tempObject.getID() == ID.FastEnemy || tempObject.getID() == ID.SmartEnemy) { //tempObject is now basic enemy
+			if (tempObject.getID() == ID.BasicEnemy || tempObject.getID() == ID.FastEnemy || tempObject.getID() == ID.SmartEnemy || tempObject.getID() == ID.EnemyBoss) { //tempObject is now basic enemy
 				if (getBounds().intersects(tempObject.getBounds())) {
 					//collision code
 					HUD.health -= 2;
