@@ -8,12 +8,14 @@ import java.awt.event.MouseEvent;
 import java.util.Random;
 
 import com.djdarkside.simple.Game.STATE;
+import com.djdarkside.simple.display.Display;
 
 public class Menu extends MouseAdapter {
 	
 	private Game game;
 	private Handler handler;
 	private Random r = new Random();
+	Display display;
 	
 	public Menu(Game game, Handler handler) {
 		this.game = game;

@@ -1,13 +1,15 @@
 package com.djdarkside.simple.display;
 
 import com.djdarkside.simple.SpriteSheet;
-import com.djdarkside.simple.display.*;
+import com.djdarkside.simple.Sprite;
+
 
 public class Display {
 	
 	public int width;
 	public int height;
 	public int[] pixels;
+	private final int ALPHA_COL = 0xffff00ff;
 	
 	public Display(int width, int height) {		
 		this.width = width;
@@ -31,5 +33,15 @@ public class Display {
 			}
 		}
 	}
-
+	public void renderSprite(int xp, int yp, Sprite sprite) {
+		for (int y = 0; y < sprite.getHeight(); y++) {
+			int ya = y + yp;
+			for (int x = 0; x < sprite.getWidth(); x++) {
+				int xa = x + xp;
+				if (xa < 0 || xa >= width || ya < 0 || ya >= height) continue;
+				int col = sprite.pixels[x + y * sprite.getWidth()];
+				if (col != ALPHA_COL && col != 0xff7f007f) pixels[xa + ya * width] = col  ;
+			}
+		}
+	}
 }

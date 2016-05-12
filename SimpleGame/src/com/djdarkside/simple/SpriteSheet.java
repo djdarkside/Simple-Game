@@ -9,7 +9,7 @@ import javax.imageio.ImageIO;
 
 public class SpriteSheet {
 
-	private String path;
+	public String path;
 	public final int SIZE;
 	public final int SPRITE_WIDTH, SPRITE_HEIGHT;
 	
@@ -17,7 +17,7 @@ public class SpriteSheet {
 	private int height;
 	public int[] pixels;
 	
-	public static SpriteSheet sheet = new SpriteSheet("/res/bg.png", Game.getWindowWidth(),Game.getWindowHeight());
+	public static SpriteSheet sheet = new SpriteSheet("/bg.png", 1, 1);
 		
 	public SpriteSheet(String path, int width, int height ) {
 		this.path = path;

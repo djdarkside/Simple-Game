@@ -47,7 +47,6 @@ public class Game extends Canvas implements Runnable {
 		display = new Display(width, height);		
 		hud = new HUD();
 		spawn = new Spawn(handler, hud);
-		
 		if (gameState == STATE.Game) {
 			handler.addObject(new Player(width / 2, height / 2, ID.Player, handler));		
 		}
@@ -116,12 +115,17 @@ public class Game extends Canvas implements Runnable {
 			return;
 		}
 		display.clear();
-		Graphics g = buffer.getDrawGraphics();		
+	//////////Cherno Code
+		//for (int i = 0; i < pixels.length; i++) {
+		//	pixels[i] = display.pixels[i];
+		//}
+	/////////Cherno Code End
+		Graphics g = buffer.getDrawGraphics();	
+		g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
 	//Graphics Below		
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, getWidth(), getHeight());
 		handler.render(g);   	//Renders Player objects
-		
 		if (gameState == STATE.Game) {
 			hud.render(g);		    //Renders the HUD
 		} else if (gameState == STATE.Menu) {
