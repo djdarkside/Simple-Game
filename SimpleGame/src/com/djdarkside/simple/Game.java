@@ -29,18 +29,28 @@ public class Game extends Canvas implements Runnable {
 	private Random random;
 	private HUD hud;	
 	private Spawn spawn;
+	private Menu menu;
+	
+	public enum STATE {
+		Menu, Game, Options
+	};	
+	public STATE gameState = STATE.Menu;
 	
 	public Game() {		
 		handler = new Handler();
 		random = new Random();
+		menu = new Menu(this, handler);
 		this.addKeyListener(new KeyInput(handler));
+		this.addMouseListener(menu);
 		Dimension size = new Dimension(width, height);
 		setPreferredSize(size);
 		display = new Display(width, height);		
 		hud = new HUD();
 		spawn = new Spawn(handler, hud);
-		handler.addObject(new Player(width / 2, height / 2, ID.Player, handler));		
-		//handler.addObject(new EnemyBoss((width / 2) - 48, -120, ID.EnemyBoss, handler));
+		
+		if (gameState == STATE.Game) {
+			handler.addObject(new Player(width / 2, height / 2, ID.Player, handler));		
+		}
 	}
 	
 //Start Game Loop
@@ -90,8 +100,12 @@ public class Game extends Canvas implements Runnable {
 	
 	public void update() {
 		handler.update();
-		hud.update();
-		spawn.update();
+		if (gameState == STATE.Game) {
+			hud.update();
+			spawn.update();			
+		} else if (gameState == STATE.Menu || gameState == STATE.Options) {
+			menu.update();			
+		} 
 		
 	}
 	
@@ -102,16 +116,20 @@ public class Game extends Canvas implements Runnable {
 			return;
 		}
 		display.clear();
-		Graphics g = buffer.getDrawGraphics();	
+		Graphics g = buffer.getDrawGraphics();		
 	//Graphics Below		
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, getWidth(), getHeight());
-		SpriteSheet sheet = new SpriteSheet("\res\bg.png", 200, 200);
 		handler.render(g);   	//Renders Player objects
-		hud.render(g);		    //Renders the HUD
+		
+		if (gameState == STATE.Game) {
+			hud.render(g);		    //Renders the HUD
+		} else if (gameState == STATE.Menu) {
+			menu.render(g);			
+		}
 	//End Graphics
 		g.dispose();
-		buffer.show();		
+		buffer.show();
 	}
 	
 	public static float clamp(float var, float min, float max) {

@@ -8,8 +8,7 @@ public class Spawn {
 	private HUD hud;
 	private int scoreKeep = 0;
 	private Random r = new Random();
-	private Coin coin;
-	
+	private Coin coin;	
 	
 	public Spawn(Handler handler, HUD hud) {
 		this.handler = handler;
@@ -17,10 +16,10 @@ public class Spawn {
 	}
 	
 	public void update() {
-		scoreKeep++;
-		
+		scoreKeep++;		
 		if (scoreKeep >= 250) {
 			scoreKeep = 0;
+			
 			hud.setLevel(hud.getLevel() + 1);	
 			
 			if (hud.getLevel() == 2) {

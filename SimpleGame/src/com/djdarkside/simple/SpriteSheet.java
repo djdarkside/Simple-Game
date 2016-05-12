@@ -1,5 +1,7 @@
 package com.djdarkside.simple;
 
+import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
@@ -15,8 +17,8 @@ public class SpriteSheet {
 	private int height;
 	public int[] pixels;
 	
-	
-	
+	public static SpriteSheet sheet = new SpriteSheet("/res/bg.png", Game.getWindowWidth(),Game.getWindowHeight());
+		
 	public SpriteSheet(String path, int width, int height ) {
 		this.path = path;
 		SIZE = -1;
@@ -40,7 +42,5 @@ public class SpriteSheet {
 		} catch (Exception e) {
 			System.err.println(" failed!");
 		}
-	}
-	
-	
+	}	
 }

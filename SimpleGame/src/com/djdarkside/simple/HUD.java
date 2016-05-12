@@ -3,12 +3,15 @@ package com.djdarkside.simple;
 import java.awt.Color;
 import java.awt.Graphics;
 
+import com.djdarkside.simple.display.Display;
+
 public class HUD {
 
 	public static int health = 100;
 	private int greenValue = (int) (((float)health/100f)*255f);
 	private int score = 0;
 	private int level = 1;
+	Display display;
 	
 	public void update() {
 		health = (int) Game.clamp(health, 0, 100);
@@ -25,7 +28,7 @@ public class HUD {
 		g.setColor(Color.white);
 		g.drawRect(15, 15, 400, 24);
 		g.drawString("Level: " + level, 15, 12);
-		g.drawString("Score: " + score, 72, 12);		
+		g.drawString("Score: " + score, 72, 12);	
 	}	
 	
 	public void score(int score) {

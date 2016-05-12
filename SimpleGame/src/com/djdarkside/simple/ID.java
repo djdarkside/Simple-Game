@@ -8,6 +8,5 @@ public enum ID {
 	SmartEnemy(),
 	EnemyBoss(),
 	Coin(),
-	Trail();	
-	
+	Trail()	
 }
