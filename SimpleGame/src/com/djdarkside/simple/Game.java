@@ -39,9 +39,8 @@ public class Game extends Canvas implements Runnable {
 		display = new Display(width, height);		
 		hud = new HUD();
 		spawn = new Spawn(handler, hud);
-		handler.addObject(new Player(width / 2, height / 2, ID.Player, handler));	
-		
-			handler.addObject(new EnemyBoss((width / 2) - 48, -120, ID.EnemyBoss, handler));
+		handler.addObject(new Player(width / 2, height / 2, ID.Player, handler));		
+		//handler.addObject(new EnemyBoss((width / 2) - 48, -120, ID.EnemyBoss, handler));
 	}
 	
 //Start Game Loop
@@ -107,6 +106,7 @@ public class Game extends Canvas implements Runnable {
 	//Graphics Below		
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, getWidth(), getHeight());
+		SpriteSheet sheet = new SpriteSheet("\res\bg.png", 200, 200);
 		handler.render(g);   	//Renders Player objects
 		hud.render(g);		    //Renders the HUD
 	//End Graphics
