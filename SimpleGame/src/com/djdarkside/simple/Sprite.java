@@ -10,7 +10,6 @@ public class Sprite {
 	protected SpriteSheet sheet;
 	public final int SIZE;
 	
-	public static Sprite sprite = new Sprite(SpriteSheet.sheet, 0, 0, 50, 50);
 	
 	protected Sprite(SpriteSheet sheet, int width, int height) {
 		if (width == height) SIZE = width;

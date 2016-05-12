@@ -6,6 +6,7 @@ import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
+import java.io.IOException;
 import java.util.Random;
 
 import javax.swing.JFrame;
@@ -30,6 +31,8 @@ public class Game extends Canvas implements Runnable {
 	private HUD hud;	
 	private Spawn spawn;
 	private Menu menu;
+	private BufferedImage background = null;
+	private SpriteSheet sheet;
 	
 	public enum STATE {
 		Menu, Game, Options
@@ -47,6 +50,12 @@ public class Game extends Canvas implements Runnable {
 		display = new Display(width, height);		
 		hud = new HUD();
 		spawn = new Spawn(handler, hud);
+		BufferedImageLoader loader = new BufferedImageLoader();
+		try {
+			background = loader.loadImage("/bg.png");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		if (gameState == STATE.Game) {
 			handler.addObject(new Player(width / 2, height / 2, ID.Player, handler));		
 		}
@@ -116,15 +125,16 @@ public class Game extends Canvas implements Runnable {
 		}
 		display.clear();
 	//////////Cherno Code
-		//for (int i = 0; i < pixels.length; i++) {
-		//	pixels[i] = display.pixels[i];
-		//}
+		for (int i = 0; i < pixels.length; i++) {
+			pixels[i] = display.pixels[i];
+		}
 	/////////Cherno Code End
 		Graphics g = buffer.getDrawGraphics();	
 		g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
 	//Graphics Below		
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, getWidth(), getHeight());
+		g.drawImage(background, 0, 0, null);
 		handler.render(g);   	//Renders Player objects
 		if (gameState == STATE.Game) {
 			hud.render(g);		    //Renders the HUD

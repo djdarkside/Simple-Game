@@ -10,14 +10,28 @@ import javax.imageio.ImageIO;
 public class SpriteSheet {
 
 	public String path;
-	public final int SIZE;
-	public final int SPRITE_WIDTH, SPRITE_HEIGHT;
+	public int SIZE;
+	public int SPRITE_WIDTH, SPRITE_HEIGHT;
 	
 	private int width;
 	private int height;
 	public int[] pixels;
+	private BufferedImage image;
 	
-	public static SpriteSheet sheet = new SpriteSheet("/bg.png", 1, 1);
+	
+	SpriteSheet(BufferedImage image) {
+		this.image = image;
+	}
+	
+	public BufferedImage loadImage(String path) throws IOException {		
+		image = ImageIO.read(getClass().getResource(path));
+		return image;
+	}	
+	
+	public BufferedImage grabImage(int col, int row, int width, int height) {
+		BufferedImage img = image.getSubimage((col * 64) - 64, (row * 64) - 64, width, height);
+		return img;		
+	}
 		
 	public SpriteSheet(String path, int width, int height ) {
 		this.path = path;
@@ -25,7 +39,11 @@ public class SpriteSheet {
 		SPRITE_WIDTH = width;
 		SPRITE_HEIGHT = height;
 		pixels = new int [SPRITE_WIDTH * SPRITE_HEIGHT];
-		load();		
+		try {
+			loadImage(path);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}		
 	}
 	
 	private void load() {
