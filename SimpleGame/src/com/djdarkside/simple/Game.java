@@ -57,7 +57,8 @@ public class Game extends Canvas implements Runnable {
 			e.printStackTrace();
 		}
 		if (gameState == STATE.Game) {
-			handler.addObject(new Player(width / 2, height / 2, ID.Player, handler));		
+			handler.addObject(new Player(width / 2, height / 2, ID.Player, handler));
+			handler.addObject(new Coin(200,500,ID.Coin,handler));
 		}
 	}
 	

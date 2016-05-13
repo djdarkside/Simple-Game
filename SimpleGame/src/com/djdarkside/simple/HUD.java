@@ -9,7 +9,7 @@ public class HUD {
 
 	public static int health = 100;
 	private int greenValue = (int) (((float)health/100f)*255f);
-	private int score = 0;
+	public static int score = 0;
 	private int level = 1;
 	Display display;
 	
@@ -17,7 +17,7 @@ public class HUD {
 		health = (int) Game.clamp(health, 0, 100);
 		greenValue = (int) Game.clamp(greenValue, 0, 255);
 		greenValue = health * 2;
-		score++;
+		//score++;
 	}
 	
 	public void render(Graphics g) {

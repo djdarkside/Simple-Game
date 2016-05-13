@@ -14,6 +14,10 @@ public class Coin extends GameObject {
 		super(x, y, id);
 		this.handler = handler;
 	}
+	
+	public boolean grabCoin() {		
+		return true;
+	}
 
 	@Override
 	public void update() {

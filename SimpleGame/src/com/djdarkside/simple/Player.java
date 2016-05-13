@@ -13,6 +13,7 @@ public class Player extends GameObject {
 	
 	Random random = new Random();
 	Handler handler;
+	Coin coin = new Coin(400, 400, ID.Coin, handler);
 
 	public Player(int x, int y, ID id, Handler handler) {
 		super(x, y, id);
@@ -26,6 +27,7 @@ public class Player extends GameObject {
 		y = Game.clamp(y, 0, Game.getWindowHeight() - 32);
 		handler.addObject(new Trail(x, y, ID.Trail, Color.blue, 32, 32, 0.05f, handler));
 		collision();
+		coinCollision();
 	}
 	@Override
 	public void render(Graphics g) {
@@ -45,6 +47,18 @@ public class Player extends GameObject {
 					HUD.health -= 2;
 				}
 			}			
+		}
+	}
+	
+	public void coinCollision() {
+		for (int i = 0; i < handler.object.size(); i++) {
+			GameObject tempObject = handler.object.get(i);
+			if (tempObject.getID() == ID.Coin) {
+				if (getBounds().intersects(tempObject.getBounds())) {
+					handler.removeObject(coin);
+					HUD.score += 100;
+				}
+			}
 		}
 	}
 }
