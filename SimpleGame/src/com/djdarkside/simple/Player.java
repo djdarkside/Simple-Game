@@ -13,7 +13,7 @@ public class Player extends GameObject {
 	
 	Random random = new Random();
 	Handler handler;
-	Coin coin = new Coin(400, 400, ID.Coin, handler);
+	Spawn spawn;
 
 	public Player(int x, int y, ID id, Handler handler) {
 		super(x, y, id);
@@ -55,10 +55,10 @@ public class Player extends GameObject {
 			GameObject tempObject = handler.object.get(i);
 			if (tempObject.getID() == ID.Coin) {
 				if (getBounds().intersects(tempObject.getBounds())) {
-					handler.removeObject(coin);
+					handler.removeObject(tempObject);
 					HUD.score += 100;
-				}
+				}				
 			}
-		}
+		}		
 	}
 }

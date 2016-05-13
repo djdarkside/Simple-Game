@@ -32,6 +32,7 @@ public class SpriteSheet {
 		BufferedImage img = image.getSubimage((col * 64) - 64, (row * 64) - 64, width, height);
 		return img;		
 	}
+	
 		
 	public SpriteSheet(String path, int width, int height ) {
 		this.path = path;

@@ -33,6 +33,7 @@ public class Game extends Canvas implements Runnable {
 	private Menu menu;
 	private BufferedImage background = null;
 	private SpriteSheet sheet;
+	private Coin coin;
 	
 	public enum STATE {
 		Menu, Game, Options
@@ -50,7 +51,9 @@ public class Game extends Canvas implements Runnable {
 		display = new Display(width, height);		
 		hud = new HUD();
 		spawn = new Spawn(handler, hud);
+		
 		BufferedImageLoader loader = new BufferedImageLoader();
+		
 		try {
 			background = loader.loadImage("/bg.png");
 		} catch (IOException e) {
@@ -58,7 +61,6 @@ public class Game extends Canvas implements Runnable {
 		}
 		if (gameState == STATE.Game) {
 			handler.addObject(new Player(width / 2, height / 2, ID.Player, handler));
-			handler.addObject(new Coin(200,500,ID.Coin,handler));
 		}
 	}
 	
@@ -106,8 +108,9 @@ public class Game extends Canvas implements Runnable {
 			e.printStackTrace();
 		}		
 	}
-	
+	float scroll = 0;
 	public void update() {
+		scroll -= 0.4;
 		handler.update();
 		if (gameState == STATE.Game) {
 			hud.update();
@@ -125,18 +128,14 @@ public class Game extends Canvas implements Runnable {
 			return;
 		}
 		display.clear();
-	//////////Cherno Code
-		for (int i = 0; i < pixels.length; i++) {
-			pixels[i] = display.pixels[i];
-		}
-	/////////Cherno Code End
 		Graphics g = buffer.getDrawGraphics();	
 		g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
 	//Graphics Below		
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, getWidth(), getHeight());
-		g.drawImage(background, 0, 0, null);
+		g.drawImage(background, (int)scroll, 0, null);
 		handler.render(g);   	//Renders Player objects
+		
 		if (gameState == STATE.Game) {
 			hud.render(g);		    //Renders the HUD
 		} else if (gameState == STATE.Menu) {
