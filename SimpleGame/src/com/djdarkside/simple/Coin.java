@@ -25,12 +25,13 @@ public class Coin extends GameObject {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		velX = -1;
 	}
 	
 
 	@Override
 	public void update() {
-		
+		x += velX;
 	}
 
 	@Override
