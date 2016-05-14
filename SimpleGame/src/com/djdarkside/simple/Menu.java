@@ -17,9 +17,10 @@ public class Menu extends MouseAdapter {
 	private Random r = new Random();
 	private HUD hud;
 	
-	public Menu(Game game, Handler handler) {
+	public Menu(Game game, Handler handler, HUD hud) {
 		this.game = game;
 		this.handler = handler;
+		this.hud = hud;
 	}
 	
 	public void mousePressed(MouseEvent e) {
@@ -32,33 +33,38 @@ public class Menu extends MouseAdapter {
 				game.gameState = STATE.Game;
 				handler.addObject(new Player(Game.getWindowWidth() / 2, Game.getWindowHeight() / 2, ID.Player, handler));	
 				handler.clearEnemy();
-				handler.addObject(new BasicEnemy(Game.getWindowWidth() - 50, Game.getWindowHeight() -50, ID.BasicEnemy, handler));			
+				handler.addObject(new BasicEnemy(Game.getWindowWidth() - 50, Game.getWindowHeight() -50, ID.BasicEnemy, handler));	
+				AudioPlayer.getSound("click").play();
 			}		
 			//Quit Button
 			if (mouseOver(mx, my, 510, 475, 250, 64)) {  //Quit Button
+				AudioPlayer.getSound("click").play();
 				System.exit(0);
 			}
 			//Options Button
 			if (mouseOver(mx, my, 510, 325, 250, 64)) {  //Options Button
 				game.gameState = STATE.Options;
+				AudioPlayer.getSound("click").play();
 			}
 		}
 			//Back Button
 		if (game.gameState == STATE.Options) {
 			if (mouseOver(mx, my, 210, 350, 200, 64)) {
 				game.gameState = STATE.Menu;
+				AudioPlayer.getSound("click").play();
 				return;
 			}			
 		}
 		//Resets
 		if (game.gameState == STATE.End) {
-			if (mouseOver(mx, my, 210, 350, 200, 64)) {
+			if (mouseOver(mx, my, 510, 325, 200, 64)) {
 				game.gameState = STATE.Game;
-				//hud.setLevel(1);
-				//hud.setScore(0);
+				hud.setLevel(1);
+				hud.setScore(0);
 				handler.addObject(new Player(Game.getWindowWidth() / 2, Game.getWindowHeight() / 2, ID.Player, handler));	
 				handler.clearEnemy();
 				handler.addObject(new BasicEnemy(Game.getWindowWidth() - 50, Game.getWindowHeight() -50, ID.BasicEnemy, handler));	
+				AudioPlayer.getSound("click").play();
 			}			
 		}	
 	}
@@ -113,7 +119,7 @@ public class Menu extends MouseAdapter {
 			g.drawString("Game Over", Game.getWindowWidth() / 2 - 200, 110);
 			
 			g.setFont(font3);
-			g.drawString("You lost with a score of: " + HUD.score, Game.getWindowWidth() / 2 - 475, 200);
+			g.drawString("You lost with a score of: " + hud.getScore(), Game.getWindowWidth() / 2 - 475, 200);
 			
 			g.setFont(font2);
 			g.drawRect(510, 325, 250, 64);

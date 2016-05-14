@@ -45,15 +45,20 @@ public class Game extends Canvas implements Runnable {
 	public Game() {		
 		handler = new Handler();
 		random = new Random();
-		menu = new Menu(this, handler);
+		hud = new HUD();
+		menu = new Menu(this, handler, hud);
 		this.addKeyListener(new KeyInput(handler));
 		this.addMouseListener(menu);
+		AudioPlayer.load();
+		AudioPlayer.getMusic("music").loop();
 		Dimension size = new Dimension(width, height);
 		setPreferredSize(size);
 		display = new Display(width, height);		
-		hud = new HUD();
 		spawn = new Spawn(handler, hud);
-		if (gameState == STATE.Game) {
+		BufferedImageLoader loader = new BufferedImageLoader();
+		
+		
+		if (gameState == STATE.Game) {			
 			handler.addObject(new Player(width / 2, height / 2, ID.Player, handler));	
 			handler.addObject(new BasicEnemy(random.nextInt(width), random.nextInt(height), ID.BasicEnemy, handler));
 		} else {
@@ -62,14 +67,11 @@ public class Game extends Canvas implements Runnable {
 			}
 		}
 		
-		BufferedImageLoader loader = new BufferedImageLoader();
 		try {
 			background = loader.loadImage("/bg.png");  // Adds Background
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-
 	}
 	
 //Start Game Loop
@@ -126,7 +128,6 @@ public class Game extends Canvas implements Runnable {
 			
 			if (HUD.health <= 0) {
 				HUD.health = 100;
-
 				gameState = STATE.End;
 				handler.clearEnemy();
 			}
@@ -169,13 +170,14 @@ public class Game extends Canvas implements Runnable {
 	public static void main(String args[]) {
 		Game game = new Game();
 		game.frame = new JFrame();
+		game.frame.setUndecorated(true);
 		game.frame.setResizable(false);
 		game.frame.setTitle(title);
 		game.frame.add(game);
 		game.frame.pack();
 		game.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		game.frame.setLocationRelativeTo(null);
-		game.frame.setVisible(true);		
+		game.frame.setVisible(true);
 		game.start();
 	}
 	
