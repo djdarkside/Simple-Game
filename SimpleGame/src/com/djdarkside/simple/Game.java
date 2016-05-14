@@ -34,11 +34,13 @@ public class Game extends Canvas implements Runnable {
 	private BufferedImage background = null;
 	private SpriteSheet sheet;
 	private Coin coin;
+	private float scroll = 0;
+
 	
 	public enum STATE {
-		Menu, Game, Options
+		Menu, Game, Options, End
 	};	
-	public STATE gameState = STATE.Menu;
+	public static STATE gameState = STATE.Menu;
 	
 	public Game() {		
 		handler = new Handler();
@@ -51,17 +53,23 @@ public class Game extends Canvas implements Runnable {
 		display = new Display(width, height);		
 		hud = new HUD();
 		spawn = new Spawn(handler, hud);
+		if (gameState == STATE.Game) {
+			handler.addObject(new Player(width / 2, height / 2, ID.Player, handler));	
+			handler.addObject(new BasicEnemy(random.nextInt(width), random.nextInt(height), ID.BasicEnemy, handler));
+		} else {
+			for (int i = 0; i < 20; i++) {
+				handler.addObject(new MenuParticle(random.nextInt(width), random.nextInt(height), ID.MenuParticle, handler));
+			}
+		}
 		
 		BufferedImageLoader loader = new BufferedImageLoader();
-		
 		try {
-			background = loader.loadImage("/bg.png");
+			background = loader.loadImage("/bg.png");  // Adds Background
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		if (gameState == STATE.Game) {
-			handler.addObject(new Player(width / 2, height / 2, ID.Player, handler));
-		}
+		
+
 	}
 	
 //Start Game Loop
@@ -108,14 +116,21 @@ public class Game extends Canvas implements Runnable {
 			e.printStackTrace();
 		}		
 	}
-	float scroll = 0;
+	
 	public void update() {
 		scroll -= 0.4;
 		handler.update();
 		if (gameState == STATE.Game) {
 			hud.update();
-			spawn.update();			
-		} else if (gameState == STATE.Menu || gameState == STATE.Options) {
+			spawn.update();	
+			
+			if (HUD.health <= 0) {
+				HUD.health = 100;
+
+				gameState = STATE.End;
+				handler.clearEnemy();
+			}
+		} else if (gameState == STATE.Menu || gameState == STATE.End) {
 			menu.update();			
 		} 
 		
@@ -133,12 +148,11 @@ public class Game extends Canvas implements Runnable {
 	//Graphics Below		
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, getWidth(), getHeight());
-		g.drawImage(background, (int)scroll, 0, null);
-		handler.render(g);   	//Renders Player objects
-		
+		g.drawImage(background, (int)scroll, 0, null); //renders the background
+		handler.render(g);   	//Renders Player objects		
 		if (gameState == STATE.Game) {
 			hud.render(g);		    //Renders the HUD
-		} else if (gameState == STATE.Menu) {
+		} else if (gameState == STATE.Menu || gameState == STATE.Options || gameState == STATE.End) {
 			menu.render(g);			
 		}
 	//End Graphics

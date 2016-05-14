@@ -21,8 +21,10 @@ public class Spawn {
 	}
 	
 	public void update() {
+		
 		scoreKeep++;	
 		if (scoreKeep >= 200) {
+			genCoin();
 			scoreKeep = 0;			
 			hud.setLevel(hud.getLevel() + 1);
 			if (hud.getLevel() == 2) {	
@@ -32,10 +34,10 @@ public class Spawn {
 				genCoin();
 				handler.addObject(new FastEnemy(r.nextInt(Game.getWindowWidth()- 50), r.nextInt(Game.getWindowHeight()- 50), ID.FastEnemy, handler));
 			} else if (hud.getLevel() == 4) {
-				genCoin();
+				//();
 				handler.addObject(new SmartEnemy(r.nextInt(Game.getWindowWidth()- 50), r.nextInt(Game.getWindowHeight()- 50), ID.SmartEnemy, handler));
 			} else if (hud.getLevel() == 5) {
-				genCoin();
+				//genCoin();
 				//handler.addObject(new EnemyBoss(Game.getWindowWidth() / 2, -65, ID.EnemyBoss, handler));
 			}
 		} 			

@@ -18,7 +18,7 @@ public class SpriteSheet {
 	public int[] pixels;
 	private BufferedImage image;
 	
-	
+
 	SpriteSheet(BufferedImage image) {
 		this.image = image;
 	}
