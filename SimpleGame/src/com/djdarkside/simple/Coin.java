@@ -29,7 +29,7 @@ public class Coin extends GameObject {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		velX = -1;
+		velX = -3;
 	}	
 
 	@Override
@@ -47,7 +47,7 @@ public class Coin extends GameObject {
 
 	@Override
 	public Rectangle getBounds() {
-		return new Rectangle((int)x, (int)y, 16, 16);
+		return new Rectangle((int)x, (int)y, 24, 24);
 	}
 
 }

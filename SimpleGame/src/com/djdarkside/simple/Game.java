@@ -50,7 +50,7 @@ public class Game extends Canvas implements Runnable {
 		this.addKeyListener(new KeyInput(handler));
 		this.addMouseListener(menu);
 		AudioPlayer.load();
-		AudioPlayer.getMusic("music").loop();
+		AudioPlayer.getMusic("music").loop(1, 0.5f);
 		Dimension size = new Dimension(width, height);
 		setPreferredSize(size);
 		display = new Display(width, height);		
@@ -58,8 +58,8 @@ public class Game extends Canvas implements Runnable {
 		BufferedImageLoader loader = new BufferedImageLoader();
 		
 		
-		if (gameState == STATE.Game) {			
-			handler.addObject(new Player(width / 2, height / 2, ID.Player, handler));	
+		if (gameState == STATE.Game) {	
+			handler.addObject(new Player(width / 2, height / 2, ID.Player, handler));				
 			handler.addObject(new BasicEnemy(random.nextInt(width), random.nextInt(height), ID.BasicEnemy, handler));
 		} else {
 			for (int i = 0; i < 20; i++) {
@@ -120,7 +120,7 @@ public class Game extends Canvas implements Runnable {
 	}
 	
 	public void update() {
-		scroll -= 0.4;
+		scroll -= 0.2;
 		handler.update();
 		if (gameState == STATE.Game) {
 			hud.update();
@@ -170,7 +170,7 @@ public class Game extends Canvas implements Runnable {
 	public static void main(String args[]) {
 		Game game = new Game();
 		game.frame = new JFrame();
-		game.frame.setUndecorated(true);
+		//game.frame.setUndecorated(true);
 		game.frame.setResizable(false);
 		game.frame.setTitle(title);
 		game.frame.add(game);

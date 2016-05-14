@@ -25,8 +25,8 @@ public class SmartEnemy extends GameObject {
 		x += velX;
 		y += velY;		
 		
-		float diffX = x - player.getX() - 8;
-		float diffY = y - player.getY() - 8;
+		float diffX = x - player.getX() - 6;
+		float diffY = y - player.getY() - 6;
 		float distance = (float) Math.sqrt((x - player.getX()) * (x - player.getX()) + (y - player.getY()) * (y - player.getY()));
 		
 		velX = (float) ((-1/distance) * diffX);
@@ -34,7 +34,7 @@ public class SmartEnemy extends GameObject {
 		
 		if (x <= 0 || x >= Game.getWindowWidth() - 16) velX *= -1;
 		if (y <= 0 || y >= Game.getWindowHeight() - 16) velY *= -1;
-		handler.addObject(new Trail(x, y, ID.Trail, Color.green, 16, 16, 0.02f, handler));
+		handler.addObject(new Trail(x, y, ID.Trail, Color.green, 16, 16, 0.005f, handler));
 	}
 	@Override
 	public void render(Graphics g) {
