@@ -3,6 +3,8 @@ package com.djdarkside.simple.input;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
+import com.djdarkside.simple.Game;
+import com.djdarkside.simple.Game.STATE;
 import com.djdarkside.simple.GameObject;
 import com.djdarkside.simple.Handler;
 import com.djdarkside.simple.ID;
@@ -11,9 +13,11 @@ public class KeyInput extends KeyAdapter {
 	
 	private Handler handler;
 	private boolean[] keyDown = new boolean[4];
+	Game game;
 	
-	public KeyInput(Handler handler) {
+	public KeyInput(Handler handler, Game game) {
 		this.handler = handler;
+		this.game = game;
 		keyDown[0] = false;
 		keyDown[1] = false;
 		keyDown[2] = false;
@@ -22,7 +26,6 @@ public class KeyInput extends KeyAdapter {
 	
 	public void keyPressed(KeyEvent e) {
 		int key = e.getKeyCode();
-
 		for (int i = 0; i < handler.object.size(); i++) {
 			GameObject tempObject = handler.object.get(i);
 			if (tempObject.getID() == ID.Player) {
@@ -31,6 +34,12 @@ public class KeyInput extends KeyAdapter {
 				if(key == KeyEvent.VK_D) { tempObject.setVelX(5); keyDown[2] = true; }
 				if(key == KeyEvent.VK_A) { tempObject.setVelX(-5); keyDown[3] = true; }
 			}
+		}		
+		if (key == KeyEvent.VK_P) {
+			if (game.gameState == STATE.Game) {
+			if (Game.paused) Game.paused = false;
+			else Game.paused = true;
+			}		
 		}
 		if (key == KeyEvent.VK_ESCAPE) System.exit(1);
 	}
@@ -49,5 +58,4 @@ public class KeyInput extends KeyAdapter {
 			}
 		}
 	}
-
 }

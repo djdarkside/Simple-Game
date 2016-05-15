@@ -20,6 +20,8 @@ public class Game extends Canvas implements Runnable {
 	private static int width = 640 * scale;
 	private static int height = width / 16 * 9;
 	private static String title = "Simple Game";
+	public static boolean paused = false;
+	public int diff = 0; //0 = normal, 1 = Hard
 	private Thread thread;
 	private boolean running = false;
 	private JFrame frame;
@@ -34,11 +36,9 @@ public class Game extends Canvas implements Runnable {
 	private BufferedImage background = null;
 	private SpriteSheet sheet;
 	private Coin coin;
-	private float scroll = 0;
-
-	
+	private float scroll = 0;	
 	public enum STATE {
-		Menu, Game, Options, End
+		Menu, Select, Game, Options, End
 	};	
 	public static STATE gameState = STATE.Menu;
 	
@@ -47,16 +47,15 @@ public class Game extends Canvas implements Runnable {
 		random = new Random();
 		hud = new HUD();
 		menu = new Menu(this, handler, hud);
-		this.addKeyListener(new KeyInput(handler));
+		this.addKeyListener(new KeyInput(handler, this));
 		this.addMouseListener(menu);
 		AudioPlayer.load();
-		AudioPlayer.getMusic("music").loop(1, 0.5f);
+		AudioPlayer.getMusic("music").loop(1, 0.08f);
 		Dimension size = new Dimension(width, height);
 		setPreferredSize(size);
 		display = new Display(width, height);		
-		spawn = new Spawn(handler, hud);
-		BufferedImageLoader loader = new BufferedImageLoader();
-		
+		spawn = new Spawn(handler, hud, this);
+		BufferedImageLoader loader = new BufferedImageLoader();		
 		
 		if (gameState == STATE.Game) {	
 			handler.addObject(new Player(width / 2, height / 2, ID.Player, handler));				
@@ -120,21 +119,24 @@ public class Game extends Canvas implements Runnable {
 	}
 	
 	public void update() {
-		scroll -= 0.2;
-		handler.update();
-		if (gameState == STATE.Game) {
-			hud.update();
-			spawn.update();	
+		if (!paused) {
+			scroll -= 0.2;		
 			
-			if (HUD.health <= 0) {
-				HUD.health = 100;
-				gameState = STATE.End;
-				handler.clearEnemy();
-			}
-		} else if (gameState == STATE.Menu || gameState == STATE.End) {
-			menu.update();			
-		} 
-		
+			if (gameState == STATE.Game) {
+				hud.update();
+				spawn.update();	
+				handler.update();
+				
+				if (HUD.health <= 0) {
+					HUD.health = 100;
+					gameState = STATE.End;
+					handler.clearEnemy();
+				}				
+			} else if (gameState == STATE.Menu || gameState == STATE.End || gameState == STATE.Select || gameState == STATE.Options) {
+				menu.update();	
+				handler.update();
+			} 
+		}		
 	}
 	
 	public void render() {
@@ -151,9 +153,14 @@ public class Game extends Canvas implements Runnable {
 		g.fillRect(0, 0, getWidth(), getHeight());
 		g.drawImage(background, (int)scroll, 0, null); //renders the background
 		handler.render(g);   	//Renders Player objects		
+		
+		if (paused) {
+			g.setColor(Color.white);
+			g.drawString("PAUSED", 350, 350);
+		}
 		if (gameState == STATE.Game) {
 			hud.render(g);		    //Renders the HUD
-		} else if (gameState == STATE.Menu || gameState == STATE.Options || gameState == STATE.End) {
+		} else if (gameState == STATE.Menu || gameState == STATE.Options || gameState == STATE.End || gameState == STATE.Select) {
 			menu.render(g);			
 		}
 	//End Graphics
@@ -170,7 +177,7 @@ public class Game extends Canvas implements Runnable {
 	public static void main(String args[]) {
 		Game game = new Game();
 		game.frame = new JFrame();
-		//game.frame.setUndecorated(true);
+		game.frame.setUndecorated(true);
 		game.frame.setResizable(false);
 		game.frame.setTitle(title);
 		game.frame.add(game);

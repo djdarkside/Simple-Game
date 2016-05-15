@@ -12,7 +12,7 @@ public class BasicEnemy extends GameObject {
 		super(x, y, id);
 		this.handler = handler;
 		velX = 5;
-		velY = 5;
+		velY = 0;
 	}
 
 	@Override

@@ -57,7 +57,7 @@ public class Player extends GameObject {
 				if (getBounds().intersects(tempObject.getBounds())) {
 					handler.removeObject(tempObject);
 					HUD.score += 100;
-					AudioPlayer.getSound("coin").play(1f, 0.4f);
+					AudioPlayer.getSound("coin").play(1, 0.05f);
 				}				
 			}
 		}		
