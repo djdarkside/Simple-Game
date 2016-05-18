@@ -41,7 +41,7 @@ public class KeyInput extends KeyAdapter {
 			else Game.paused = true;
 			}		
 		}
-		if (key == KeyEvent.VK_ESCAPE) System.exit(1);
+		if (key == KeyEvent.VK_ESCAPE) System.exit(0);
 	}
 	
 	public void keyReleased(KeyEvent e) {

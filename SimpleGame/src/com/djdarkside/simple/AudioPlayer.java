@@ -14,7 +14,7 @@ public class AudioPlayer {
 	
 	public static void load() {
 		try {
-			soundMap.put("click", new Sound("res/click.wav"));
+			soundMap.put("click", new Sound("/res/click.wav"));
 			soundMap.put("coin", new Sound("res/coin.ogg"));
 			//musicMap.put("music", new Music("res/clip.ogg"));
 			musicMap.put("music", new Music("res/music.ogg"));

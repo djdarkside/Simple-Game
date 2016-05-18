@@ -48,20 +48,20 @@ public class Menu extends MouseAdapter {
 		
 		if (game.gameState == STATE.Select) {
 			//Normal
-			if (mouseOver(mx, my, 510, 175, 250, 64)) {  //Play Button
+			if (mouseOver(mx, my, 510, 175, 250, 64)) {  
 				game.gameState = STATE.Game;
 				handler.addObject(new Player(Game.getWindowWidth() / 2, Game.getWindowHeight() / 2, ID.Player, handler));	
 				handler.clearEnemy();
-				handler.addObject(new BasicEnemy(Game.getWindowWidth() - 50, Game.getWindowHeight() -50, ID.BasicEnemy, handler));	
+				//handler.addObject(new BasicEnemy( 50, Game.getWindowHeight() -50, ID.BasicEnemy, handler));	
 				game.diff = 0;
 				AudioPlayer.getSound("click").play(1, 0.05f);
 			}		
 			//Hard Button
-			if (mouseOver(mx, my, 510, 325, 250, 64)) {  //Options Button
+			if (mouseOver(mx, my, 510, 325, 250, 64)) {  
 				game.gameState = STATE.Game;
 				handler.addObject(new Player(Game.getWindowWidth() / 2, Game.getWindowHeight() / 2, ID.Player, handler));	
 				handler.clearEnemy();
-				handler.addObject(new HardEnemy(Game.getWindowWidth() - 50, Game.getWindowHeight() -50, ID.BasicEnemy, handler));	
+				//handler.addObject(new HardEnemy(Game.getWindowWidth() - 50, Game.getWindowHeight() -50, ID.BasicEnemy, handler));	
 				game.diff = 1;
 				AudioPlayer.getSound("click").play(1, 0.05f);
 			}
@@ -75,7 +75,7 @@ public class Menu extends MouseAdapter {
 		
 			//Back Button
 		if (game.gameState == STATE.Options) {
-			if (mouseOver(mx, my, 210, 350, 200, 64)) {
+			if (mouseOver(mx, my, 550, 350, 200, 64)) {
 				game.gameState = STATE.Menu;
 				AudioPlayer.getSound("click").play(1, 0.05f);
 				return;
@@ -87,7 +87,7 @@ public class Menu extends MouseAdapter {
 				game.gameState = STATE.Menu;
 				hud.setLevel(1);
 				hud.setScore(0);
-				AudioPlayer.getSound("click").play(1, 0.05f);
+				//AudioPlayer.getSound("click").play(1, 0.05f);
 			}			
 		}	
 	}
@@ -122,15 +122,15 @@ public class Menu extends MouseAdapter {
 		} else if (game.gameState == STATE.Options) {
 			Font font = new Font("arial", 1, 75);
 			Font font2 = new Font("Century", 1, 30);
-			Font font3 = new Font("arial", 1, 75);
+			Font font3 = new Font("arial", 1, 35);
 			g.setFont(font);
 			g.setColor(Color.white);
-			g.drawString("Options", 400, 110);			
+			g.drawString("Options", 500, 110);			
 			g.setFont(font3);
-			g.drawString("Use WASD keys to move player and dodge enemies", 50, 200);			
+			g.drawString("Use WASD keys to move player and dodge enemies", 225, 200);			
 			g.setFont(font2);
-			g.drawRect(210, 350, 200, 64);
-			g.drawString("Back", 270, 390);
+			g.drawRect(550, 350, 200, 64);
+			g.drawString("Back", 610, 392);
 		} else if (game.gameState == STATE.End) {
 			Font font = new Font("arial", 1, 75);
 			Font font2 = new Font("Century", 1, 30);
@@ -151,9 +151,9 @@ public class Menu extends MouseAdapter {
 			g.drawString("Select Difficulty", 400, 110);
 			g.setFont(font2);
 			g.drawRect(510, 175, 250, 64);
-			g.drawString("Normal", 595, 217);
+			g.drawString("Normal", 575, 217);
 			g.drawRect(510, 325, 250, 64);
-			g.drawString("Hard", 575, 367);
+			g.drawString("Hard", 595, 367);
 			g.drawRect(510, 475, 250, 64);
 			g.drawString("Back", 597, 517);
 		}

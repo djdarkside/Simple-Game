@@ -10,7 +10,7 @@ public class EnemyBoss extends GameObject {
 	private Handler handler;
 	Random r = new Random();
 	
-	private int timer = 80;
+	private int timer = 25;
 	private int timer2 = 50;
 		
 	public EnemyBoss(int x, int y, ID id, Handler handler) {

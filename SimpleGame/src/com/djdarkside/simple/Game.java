@@ -2,6 +2,7 @@ package com.djdarkside.simple;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
@@ -59,7 +60,7 @@ public class Game extends Canvas implements Runnable {
 		
 		if (gameState == STATE.Game) {	
 			handler.addObject(new Player(width / 2, height / 2, ID.Player, handler));				
-			handler.addObject(new BasicEnemy(random.nextInt(width), random.nextInt(height), ID.BasicEnemy, handler));
+			//handler.addObject(new BasicEnemy(random.nextInt(width), random.nextInt(height), ID.BasicEnemy, handler));
 		} else {
 			for (int i = 0; i < 20; i++) {
 				handler.addObject(new MenuParticle(random.nextInt(width), random.nextInt(height), ID.MenuParticle, handler));
@@ -131,7 +132,8 @@ public class Game extends Canvas implements Runnable {
 					HUD.health = 100;
 					gameState = STATE.End;
 					handler.clearEnemy();
-				}				
+				}	
+
 			} else if (gameState == STATE.Menu || gameState == STATE.End || gameState == STATE.Select || gameState == STATE.Options) {
 				menu.update();	
 				handler.update();
@@ -152,7 +154,7 @@ public class Game extends Canvas implements Runnable {
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, getWidth(), getHeight());
 		g.drawImage(background, (int)scroll, 0, null); //renders the background
-		handler.render(g);   	//Renders Player objects		
+		handler.render(g);   	//Renders Player objects
 		
 		if (paused) {
 			g.setColor(Color.white);
@@ -160,6 +162,11 @@ public class Game extends Canvas implements Runnable {
 		}
 		if (gameState == STATE.Game) {
 			hud.render(g);		    //Renders the HUD
+			if (hud.getLevel() == 1) {
+				Font font = new Font("Century", 1, 45);
+				g.setFont(font);
+				g.drawString("Use WSAD keys to collect coins and dodge enemys", (int)scroll + 200, 200);
+			}
 		} else if (gameState == STATE.Menu || gameState == STATE.Options || gameState == STATE.End || gameState == STATE.Select) {
 			menu.render(g);			
 		}
@@ -177,7 +184,7 @@ public class Game extends Canvas implements Runnable {
 	public static void main(String args[]) {
 		Game game = new Game();
 		game.frame = new JFrame();
-		game.frame.setUndecorated(true);
+		//game.frame.setUndecorated(true);
 		game.frame.setResizable(false);
 		game.frame.setTitle(title);
 		game.frame.add(game);
