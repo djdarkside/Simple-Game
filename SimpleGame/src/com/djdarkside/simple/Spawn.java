@@ -19,7 +19,7 @@ public class Spawn {
 	}
 	
 	public void genCoin() {	
-		coin = new Coin(Game.getWindowWidth() + r.nextInt(1000),r.nextInt(Game.getWindowHeight()),ID.Coin,handler);
+		coin = new Coin(Game.getWindowWidth() + r.nextInt(5000),r.nextInt(Game.getWindowHeight()),ID.Coin,handler);
 		handler.addObject(coin);		
 	}
 	
@@ -40,12 +40,20 @@ public class Spawn {
 			hud.setLevel(hud.getLevel() + 1);	
 			handler.addObject(new BasicEnemy(r.nextInt(Game.getWindowWidth()- 50), r.nextInt(Game.getWindowHeight()- 50), ID.BasicEnemy, handler));
 			genCoin();
+			genCoin();
+			genCoin();
+			genCoin();
 			if (game.diff == 0) {					
 				if (hud.getLevel() == 2) {	
 					genCoin();
 					genCoin();
+					genCoin();
+					genCoin();
 					handler.addObject(new BasicEnemy(r.nextInt(Game.getWindowWidth()- 50), r.nextInt(Game.getWindowHeight()- 50), ID.BasicEnemy, handler));
 				} else if (hud.getLevel() == 3) {
+					genCoin();
+					genCoin();
+					genCoin();
 					genCoin();
 					genCoin();
 					handler.addObject(new FastEnemy(r.nextInt(Game.getWindowWidth()- 50), r.nextInt(Game.getWindowHeight()- 50), ID.FastEnemy, handler));
@@ -53,17 +61,26 @@ public class Spawn {
 					genCoin();
 					genCoin();
 					genCoin();
+					genCoin();
+					genCoin();
+					handler.addObject(new FastEnemy(r.nextInt(Game.getWindowWidth()- 50), r.nextInt(Game.getWindowHeight()- 50), ID.FastEnemy, handler));
 					handler.addObject(new FastEnemy(r.nextInt(Game.getWindowWidth()- 50), r.nextInt(Game.getWindowHeight()- 50), ID.FastEnemy, handler));
 					handler.addObject(new SmartEnemy(r.nextInt(Game.getWindowWidth()- 50), r.nextInt(Game.getWindowHeight()- 50), ID.SmartEnemy, handler));
 				} else if (hud.getLevel() == 5) {
 					handler.addObject(new BasicEnemy(r.nextInt(Game.getWindowWidth()- 50), r.nextInt(Game.getWindowHeight()- 50), ID.BasicEnemy, handler));
 					handler.addObject(new BasicEnemy(r.nextInt(Game.getWindowWidth()- 50), r.nextInt(Game.getWindowHeight()- 50), ID.BasicEnemy, handler));
-					handler.addObject(new FastEnemy(r.nextInt(Game.getWindowWidth()- 50), r.nextInt(Game.getWindowHeight()- 50), ID.FastEnemy, handler));
+					//handler.addObject(new FastEnemy(r.nextInt(Game.getWindowWidth()- 50), r.nextInt(Game.getWindowHeight()- 50), ID.FastEnemy, handler));
+					genCoin();
+					genCoin();
+					genCoin();
 					genCoin();
 					genCoin();
 					genCoin();
 				} else if (hud.getLevel() == 10) {
 					handler.addObject(new FastEnemy(r.nextInt(Game.getWindowWidth()- 50), r.nextInt(Game.getWindowHeight()- 50), ID.FastEnemy, handler));
+					genCoin();
+					genCoin();
+					genCoin();
 					genCoin();
 					genCoin();
 					genCoin();

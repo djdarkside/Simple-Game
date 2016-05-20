@@ -17,7 +17,7 @@ public class AudioPlayer {
 			soundMap.put("click", new Sound("/res/click.wav"));
 			soundMap.put("coin", new Sound("res/coin.ogg"));
 			//musicMap.put("music", new Music("res/clip.ogg"));
-			musicMap.put("music", new Music("res/musicddddd.ogg"));
+			musicMap.put("music", new Music("res/music.ogg"));
 		} catch (SlickException e) {
 			System.out.println("not Loaded");
 			e.printStackTrace();
